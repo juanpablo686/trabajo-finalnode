@@ -5,7 +5,12 @@ export const getEmployees = async (req, res) => {
     const [rows] = await pool.query("SELECT * FROM employee");
     res.json(rows);
   } catch (error) {
-    return res.status(500).json({ message: "Something goes wrong" });
+    console.error("Database error in getEmployees:", error);
+    return res.status(500).json({ 
+      message: "Database error", 
+      error: error.message,
+      code: error.code 
+    });
   }
 };
 
@@ -22,7 +27,12 @@ export const getEmployee = async (req, res) => {
 
     res.json(rows[0]);
   } catch (error) {
-    return res.status(500).json({ message: "Something goes wrong" });
+    console.error("Database error in getEmployee:", error);
+    return res.status(500).json({ 
+      message: "Database error", 
+      error: error.message,
+      code: error.code 
+    });
   }
 };
 
@@ -37,7 +47,12 @@ export const deleteEmployee = async (req, res) => {
 
     res.sendStatus(204);
   } catch (error) {
-    return res.status(500).json({ message: "Something goes wrong" });
+    console.error("Database error in deleteEmployee:", error);
+    return res.status(500).json({ 
+      message: "Database error", 
+      error: error.message,
+      code: error.code 
+    });
   }
 };
 
@@ -50,7 +65,12 @@ export const createEmployee = async (req, res) => {
     );
     res.status(201).json({ id: rows.insertId, name, salary });
   } catch (error) {
-    return res.status(500).json({ message: "Something goes wrong" });
+    console.error("Database error in createEmployee:", error);
+    return res.status(500).json({ 
+      message: "Database error", 
+      error: error.message,
+      code: error.code 
+    });
   }
 };
 
@@ -73,6 +93,11 @@ export const updateEmployee = async (req, res) => {
 
     res.json(rows[0]);
   } catch (error) {
-    return res.status(500).json({ message: "Something goes wrong" });
+    console.error("Database error in updateEmployee:", error);
+    return res.status(500).json({ 
+      message: "Database error", 
+      error: error.message,
+      code: error.code 
+    });
   }
 };
