@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { pool } from "../db.js";
+import { initializeDatabase } from "../db.js";
 import { DB_HOST, DB_USER, DB_DATABASE, DB_PORT } from "../config.js";
 
 const router = Router();
@@ -46,6 +47,23 @@ router.get("/test-db", async (req, res) => {
         database: DB_DATABASE,
         port: DB_PORT
       }
+    });
+  }
+});
+
+// Endpoint para inicializar manualmente la base de datos
+router.get("/init-db", async (req, res) => {
+  try {
+    await initializeDatabase();
+    res.json({
+      message: "Database initialized successfully",
+      status: "success"
+    });
+  } catch (error) {
+    console.error("Database initialization error:", error);
+    res.status(500).json({
+      message: "Database initialization failed",
+      error: error.message
     });
   }
 });
